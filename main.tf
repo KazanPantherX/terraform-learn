@@ -134,6 +134,31 @@ resource "aws_instance" "myapp-server" {
 
   user_data = file("entry-script.sh")
 
+  /*
+  The connection type for the provisioner should be specified
+    connection {
+      type = "ssh"
+      host = self.public_ip
+      user = "ec2-user"
+      private_key = file(var.private_key_location)
+    }
+
+  This helps to copy file from directories from local to newly created resource
+    provisioner "file" {
+      source = "entry-script.sh"
+      destination = "/home/ec2-user/Filename_preferred.sh"
+    }
+
+  This block is used to execute commands remotely in a server. It invokes script on a remote resource after it is created.
+   provisioner "remote-exec" {
+    inline = [ 
+      "export ENV=dev"
+      "mkdir newdir"
+     ]
+    
+  }
+*/
+
   tags = {
     Name: "${var.env_prefix}-server"
   }
